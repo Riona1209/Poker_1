@@ -126,13 +126,14 @@ const GameState = ({ history, children }) => {
     socket.emit(REBUY, { tableId, seatId, amount, activeTab, tnRegisterName });
   };
 
-  const standUp = () => {
+  const standUp = (flag = false) => {
     currentTableRef &&
       currentTableRef.current &&
       socket.emit(STAND_UP, {
         tableId: currentTableRef.current.id,
         activeTab,
         tnRegisterName,
+        chipLess: flag
       });
     setIsPlayerSeated(false);
     setSeatId(null);

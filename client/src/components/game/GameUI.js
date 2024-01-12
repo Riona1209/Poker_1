@@ -152,6 +152,7 @@ export const GameUI = ({
           onClick={call}
         >
           Call
+          {console.log(JSON.stringify(currentTable.seats[seatId], null, 2))}
           {currentTable.callAmount &&
           currentTable.seats[seatId].bet < currentTable.callAmount &&
           currentTable.callAmount <= currentTable.seats[seatId].stack
@@ -168,7 +169,10 @@ export const GameUI = ({
           height="48.03px"
           fill={true}
           radius="7px"
-          onClick={() => raise(bet + currentTable.seats[seatId].bet)}
+          display={currentTable.seats[seatId].stack > 0}
+          onClick={() => {
+            return raise(currentTable.seats[seatId].stack > bet ? bet + currentTable.seats[seatId].bet : currentTable.seats[seatId].stack + currentTable.seats[seatId].bet)}
+          }
         >
           Raise
         </GameUIButton>

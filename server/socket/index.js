@@ -123,6 +123,7 @@ const init = (socket, io) => {
 
       if (found) {
         delete players[found.socketId];
+
         Object.values(tables).map((table) => {
           table.removePlayer(found.socketId);
           broadcastToTable(table);
@@ -284,7 +285,7 @@ const init = (socket, io) => {
     broadcastToTable(table);
   });
 
-  socket.on(STAND_UP, ({ tableId, activeTab, tnRegisterName }) => {
+  socket.on(STAND_UP, ({ tableId, activeTab, tnRegisterName, chipLess }) => {
     const table = tables[tableId];
     if (table) {
       const player = players[socket.id];
@@ -297,8 +298,8 @@ const init = (socket, io) => {
         updatePlayerBankroll(player, seat.stack, activeTab, tnRegisterName);
         message = `${player.name} left the table`;
       }
-
-      table.standPlayer(socket.id);
+      console.log('standPlayer 2')
+      table.standPlayer(socket.id, chipLess);
 
       broadcastToTable(table, message);
       if (table.activePlayers().length === 1) {
